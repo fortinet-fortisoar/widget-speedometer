@@ -24,7 +24,7 @@
               $scope.viewWidgetVars = {
                 // Create your translating static string variables here
                 LABEL_SELECT_AN_OPTION: "Select an Option",
-                LABEL_RESOURCE: "Resource"
+                LABEL_DATA_SOURCE: "Data Source"
               };
             });
             loadModules();
@@ -59,6 +59,7 @@
           $scope.fields = [];
           $scope.fieldsArray = [];
           $scope.pickListFields = [];
+          $scope.pickListValue = [];
           $scope.userField = [];
           var entity = new Entity($scope.config.resource);
           entity.loadFields().then(function() {
@@ -67,7 +68,9 @@
                 entity.fields[key].type = 'datetime.quick';
               } else if (entity.fields[key].type === 'picklist') {
                 $scope.pickListFields.push(entity.fields[key]);
-              } 
+              } else if(entity.fields[key].type === 'text'){
+                $scope.pickListValue.push(entity.fields[key]);
+              }
             }
     
             $scope.fields = entity.getFormFields();

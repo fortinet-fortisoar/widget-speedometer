@@ -9,12 +9,12 @@
     .module('cybersponse')
     .controller('speedometer100Ctrl', speedometer100Ctrl);
 
-  speedometer100Ctrl.$inject = ['$scope', 'widgetUtilityService', 'config'];
+  speedometer100Ctrl.$inject = ['$scope', 'widgetUtilityService', 'config', '$state', 'speedometerService', 'modelMetadatasService'];
 
-  function speedometer100Ctrl($scope, widgetUtilityService, config) {
+  function speedometer100Ctrl($scope, widgetUtilityService, config, $state, speedometerService, modelMetadatasService) {
 
     $scope.config = config;
-
+    $scope.pageState = $state;
     function _handleTranslations() {
       widgetUtilityService.checkTranslationMode($scope.$parent.model.type).then(function () {
         $scope.viewWidgetVars = {
@@ -26,7 +26,13 @@
     function init() {
       // To handle backward compatibility for widget
       _handleTranslations();
-      updateSpeedometer($scope.config.score);
+      checkCurrentPage($scope.pageState);
+      var moduleMetaData = modelMetadatasService.getMetadataByModuleType($scope.config.resource);
+        $scope.multipleFieldsItems = $scope.config.multipleFieldsItems;
+        //to check if dataSource is present and fetch data from connector action or else from API query
+        if(moduleMetaData.dataSource){ 
+          executeConnectorAction(moduleMetaData.dataSource);
+        } 
     }
 
     function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
@@ -58,9 +64,9 @@
     }
 
     function updateSpeedometer(percentage) {
-      $scope.riskPercentage = percentage;
-      $scope.startRiskColor = mapRiskColor($scope.config.confidence).startRiskColor;
-      $scope.stopRiskColor = mapRiskColor($scope.config.confidence).endRiskColor;
+      $scope.riskPercentage = percentage ? percentage : 0;
+      $scope.startRiskColor = mapRiskColor($scope.scoreField).startRiskColor;
+      $scope.stopRiskColor = mapRiskColor($scope.scoreField).endRiskColor;
 
       const startAngle = 135; // Ensure alignment with background arc's start
       const endAngle = 135 + (percentage / 100) * 270; // Map percentage to 180-degree span
@@ -101,6 +107,30 @@
           return 
 
       }
+    }
+
+    function checkCurrentPage(state){
+      if (state.current.name.includes('viewPanel.modulesDetail')) {
+        let params = $scope.pageState.current.params;
+        $scope.indicator = params.id;
+      }
+    }
+
+    function executeConnectorAction(_moduleMetaData){ 
+      let _connectorName = _moduleMetaData.connector;
+      let _connectorAction = _moduleMetaData.operation;
+      let payload = { 'indicator': $scope.indicator || '8.8.8.8'};
+      var valueParameter = $scope.config.picklistValue;
+      var fieldParameter = $scope.config.picklistField;
+
+      speedometerService.executeAction(_connectorName, _connectorAction, payload).then(function (response) {
+        if(response && response.data)
+        {
+          $scope.scoreValue = response.data[valueParameter];
+          $scope.scoreField = response.data[fieldParameter].itemValue;
+          updateSpeedometer($scope.scoreValue);
+        }
+      });
     }
 
     init();

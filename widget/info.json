@@ -16,7 +16,7 @@
         "certified": "No",
         "publisher": null,
         "compatibility": [
-            "cyops"
+            "7.6.1"
         ],
         "category": [
             "Data Enrichment & Threat Intelligence",

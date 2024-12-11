@@ -23,7 +23,7 @@
             <div class="form-group"
               data-ng-class="{ 'has-error': speedometerForm.resource.$invalid && speedometerForm.resource.$touched }"
               data-ng-if="modules">
-              <label for="resource" class="control-label">{{viewWidgetVars.LABEL_RESOURCE}}<span class="text-danger">*</span></label>
+              <label for="resource" class="control-label">{{viewWidgetVars.LABEL_DATA_SOURCE}}<span class="text-danger">*</span></label>
               <select name="resource" id="resource" class="form-control"
                 data-ng-options="module.type as module.name for module in modules" data-ng-model="config.resource"
                 required data-ng-change="loadAttributes()">
@@ -32,23 +32,19 @@
               <div data-cs-messages="speedometerForm.resource"></div>
             </div>
             <div class="form-group">
-                <label class="control-label" for="picklistField">Select Field</label>
-                <select class="form-control" name="picklistField" id="picklistField" data-ng-options="field.name as field.title for field in pickListFields" ng-model="config.picklistField">
-                  <option value="">{{'COMPONENTS.FILTER.CONDITIONAL.SELECT_A_FIELD' | translate}}</option>
-                </select>
-              </div>
-              <div class="form-group" data-ng-class="{ 'has-error': speedometerForm.confidence.$invalid && speedometerForm.confidence.$touched }">
-                <label for="confidence" class="control-label">confidence<span class="text-danger">*</span>
-                </label>
-                <input id="confidence" name="confidence" type="text" class="form-control" data-ng-model="config.confidence" required>
-                <div data-cs-messages="speedometerForm.confidence"></div>
-              </div>
-              <div class="form-group" data-ng-class="{ 'has-error': speedometerForm.score.$invalid && speedometerForm.score.$touched }">
-                <label for="score" class="control-label">Score<span class="text-danger">*</span>
-                </label>
-                <input id="score" name="score" type="text" class="form-control" data-ng-model="config.score" required>
-                <div data-cs-messages="speedometerForm.score"></div>
-              </div>
+              <label class="control-label" for="picklistField">Select Picklist</label>
+              <select class="form-control" name="picklistField" id="picklistField"
+                data-ng-options="field.name as field.title for field in pickListFields" ng-model="config.picklistField">
+                <option value="">Select Picklist</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="pickListValue">Value</label>
+              <select class="form-control" name="pickListValue" id="pickListValue"
+                data-ng-options="field.name as field.title for field in pickListValue" ng-model="config.picklistValue">
+                <option value="">Value</option>
+              </select>
+            </div>
         </div>
     </div>
     <div class="modal-footer">

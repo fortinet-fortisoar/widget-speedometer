@@ -30,9 +30,16 @@ Copyright end */
 
 .confidenceClass{
   position: absolute;
-  font-size: 20px;
+  font-size: 1em;
   color: #f5f5f5;
   top: 250px;
+}
+
+.titleClass{
+  position: absolute;
+  font-size: 1em;
+  color: #f5f5f5;
+  top: 275px;
 }
 
 .riskPercentage{

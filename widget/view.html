@@ -37,10 +37,12 @@
                 <div class="needle" data-ng-style="{'background-color' : startRiskColor}"></div>
                 <div class="percentageCircle"></div>
                 <div class="riskPercentage" data-ng-style="{'color' : startRiskColor}">
-                    {{riskPercentage}}
+                    {{scoreValue}}
                 </div>
                 <div class="ng-binding confidenceClass text-capitalize">
-                    {{config.confidence}} Risk</div>
+                    {{scoreField}} Risk</div>
+                <div class="ng-binding titleClass text-capitalize">
+                        FortiTip Live Rating</div>
             </div>
         </div>
     </div>
