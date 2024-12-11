@@ -1,0 +1,49 @@
+<!-- Copyright start
+  Copyright (C) 2008 - 2024 Fortinet Inc.
+  All rights reserved.
+  FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE
+  Copyright end -->
+
+<div class="widget widget-container chart">
+    <div class="display-flex-space-between margin-chart">
+        <div class="padding-right-0 padding-left-0 widget-dashboard-title-width"
+            data-ng-class="(page === 'dashboard' || page === 'reporting') ? 'widget-dashboard-title-width' : 'widget-title-width'">
+            <h5 class="margin-top-0 margin-bottom-0 text-overflow ng-binding">{{config.title}}</h5>
+        </div>
+        <div class="padding-right-0 padding-left-0"
+            data-ng-class="(page === 'dashboard' || page === 'reporting') ? 'widget-dashboard-actions-width' : 'widget-actions-width'">
+            <span class="fa btn widget-action-icon btn-sm pull-right" data-ng-click="collapsed = !collapsed"
+                data-ng-class="{'fa-caret-up': !collapsed, 'fa-caret-down': collapsed}"></span>
+        </div>
+    </div>
+    <div data-ng-hide="collapsed">
+        <div class="padding-left-lg padding-bottom-lg">
+            <div id="speedometer"
+                style="width: 300px; height: 300px; border-radius: 50%; display: flex; justify-content: center; align-items: center; position: relative;">
+                <svg width="300" height="300" viewBox="0 0 300 300">
+                    <!-- Background arc -->
+                    <path d="M 79.28 220.71 A 100 100 0 1 1 220.71 220.71" stroke="#444" stroke-width="20" fill="none"></path>
+                    <!-- Dynamic arc -->
+                    <path id="progress-arc" stroke="url(#gradient)" stroke-width="20" fill="none"></path>
+                    <!-- Gradient for the arc -->
+                    <defs>
+                        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color='{{startRiskColor}}' />
+                            <stop offset="100%" stop-color='{{stopRiskColor}}' />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <!-- Center value -->
+                <div class="needle" data-ng-style="{'background-color' : startRiskColor}"></div>
+                <div class="percentageCircle"></div>
+                <div class="riskPercentage" data-ng-style="{'color' : startRiskColor}">
+                    {{scoreValue}}
+                </div>
+                <div class="ng-binding confidenceClass text-capitalize">
+                    {{scoreField}} Risk</div>
+                <div class="ng-binding titleClass text-capitalize">
+                        FortiTip Live Rating</div>
+            </div>
+        </div>
+    </div>
+</div>

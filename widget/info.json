@@ -1,0 +1,30 @@
+{
+    "name": "speedometer",
+    "title": "Speedometer",
+    "subTitle": "Speedometer widget",
+    "version": "1.0.0",
+    "publishedDate": 1733218494,
+    "releaseNotes": "unavailable",
+    "metadata": {
+        "description": "Speedometer widget to showcase the percentage value",
+        "pages": [
+            "Dashboard",
+            "View Panel",
+            "Reports",
+            "Listing"
+        ],
+        "certified": "No",
+        "publisher": null,
+        "compatibility": [
+            "7.6.1"
+        ],
+        "category": [
+            "Data Enrichment & Threat Intelligence",
+            "Breach and Attack Simulation (BAS)",
+            "Monitoring",
+            "Threat Intelligence",
+            "Threat Detection"
+        ]
+    },
+    "development": false
+}
