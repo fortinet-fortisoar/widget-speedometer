@@ -45,3 +45,13 @@ Copyright end */
   position: absolute; 
   font-size: 34px;
 }
+
+.tagColor{
+  background-color: '#329CAD';
+}
+
+.spinnerDiv{
+  position: fixed;
+  top: 270px;
+  left: 205px;
+}

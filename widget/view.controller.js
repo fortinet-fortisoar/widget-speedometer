@@ -14,6 +14,8 @@ Copyright end */
 
     $scope.config = config;
     $scope.pageState = $state;
+    $scope.processing = true;
+
     function _handleTranslations() {
       widgetUtilityService.checkTranslationMode($scope.$parent.model.type).then(function () {
         $scope.viewWidgetVars = {
@@ -27,7 +29,8 @@ Copyright end */
       _handleTranslations();
       checkCurrentPage($scope.pageState);
       var moduleMetaData = modelMetadatasService.getMetadataByModuleType($scope.config.resource);
-        $scope.multipleFieldsItems = $scope.config.multipleFieldsItems;
+      $scope.multipleFieldsItems = $scope.config.multipleFieldsItems;
+      $scope.multipleFieldsItemsData = [];
         //to check if dataSource is present and fetch data from connector action or else from API query
         if(moduleMetaData.dataSource){ 
           executeConnectorAction(moduleMetaData.dataSource);
@@ -118,16 +121,29 @@ Copyright end */
     function executeConnectorAction(_moduleMetaData){ 
       let _connectorName = _moduleMetaData.connector;
       let _connectorAction = _moduleMetaData.operation;
-      let payload = { 'indicator': $scope.indicator || '8.8.8.8'};
+      let payload = { 'indicator': $scope.indicator };
       var valueParameter = $scope.config.picklistValue;
       var fieldParameter = $scope.config.picklistField;
 
       speedometerService.executeAction(_connectorName, _connectorAction, payload).then(function (response) {
         if(response && response.data)
         {
+          $scope.processing = false;
           $scope.scoreValue = response.data[valueParameter];
           $scope.scoreField = response.data[fieldParameter].itemValue;
           updateSpeedometer($scope.scoreValue);
+          setMultipleFieldsData(response.data);
+        }
+      });
+    }
+
+    function setMultipleFieldsData(_responseData){
+      $scope.multipleFieldsItems.forEach(element => {
+        if (_responseData[element.name]) {
+          $scope.multipleFieldsItemsData.push({
+            'field': element.title,
+            'value': _responseData[element.name]
+          });
         }
       });
     }
