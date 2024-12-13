@@ -12,40 +12,53 @@ Copyright end -->
         </button>
     </div>
     <div class="modal-body">
-        <div>
-            <div class="form-group" data-ng-class="{ 'has-error': speedometerForm.title.$invalid && speedometerForm.title.$touched }">
-                <label for="title" class="control-label">{{'COMPONENTS.VIEW_TEMPLATES.WIDGETS.CHART.TITLE' | translate}}<span class="text-danger">*</span>
-                </label>
-                <input id="title" name="title" type="text" class="form-control" data-ng-model="config.title" required>
-                <div data-cs-messages="speedometerForm.title"></div>
-              </div>
-            <div class="form-group"
-              data-ng-class="{ 'has-error': speedometerForm.resource.$invalid && speedometerForm.resource.$touched }"
-              data-ng-if="modules">
-              <label for="resource" class="control-label">{{viewWidgetVars.LABEL_DATA_SOURCE}}<span class="text-danger">*</span></label>
-              <select name="resource" id="resource" class="form-control"
-                data-ng-options="module.type as module.name for module in modules" data-ng-model="config.resource"
-                required data-ng-change="loadAttributes()">
-                <option value="">{{viewWidgetVars.LABEL_SELECT_AN_OPTION}}</option>
-              </select>
-              <div data-cs-messages="speedometerForm.resource"></div>
+      <div>
+          <div class="form-group" data-ng-class="{ 'has-error': speedometerForm.title.$invalid && speedometerForm.title.$touched }">
+              <label for="title" class="control-label">{{'COMPONENTS.VIEW_TEMPLATES.WIDGETS.CHART.TITLE' | translate}}<span class="text-danger">*</span>
+              </label>
+              <input id="title" name="title" type="text" class="form-control" data-ng-model="config.title" required>
+              <div data-cs-messages="speedometerForm.title"></div>
             </div>
-            <div class="form-group">
-              <label class="control-label" for="picklistField">Select Picklist</label>
-              <select class="form-control" name="picklistField" id="picklistField"
-                data-ng-options="field.name as field.title for field in pickListFields" ng-model="config.picklistField">
-                <option value="">Select Picklist</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="control-label" for="pickListValue">Value</label>
-              <select class="form-control" name="pickListValue" id="pickListValue"
-                data-ng-options="field.name as field.title for field in pickListValue" ng-model="config.picklistValue">
-                <option value="">Value</option>
-              </select>
-            </div>
-        </div>
-    </div>
+          <div class="form-group"
+            data-ng-class="{ 'has-error': speedometerForm.resource.$invalid && speedometerForm.resource.$touched }"
+            data-ng-if="modules">
+            <label for="resource" class="control-label">{{viewWidgetVars.LABEL_DATA_SOURCE}}<span class="text-danger">*</span></label>
+            <select name="resource" id="resource" class="form-control"
+              data-ng-options="module.type as module.name for module in modules" data-ng-model="config.resource"
+              required data-ng-change="loadAttributes()">
+              <option value="">{{viewWidgetVars.LABEL_SELECT_AN_OPTION}}</option>
+            </select>
+            <div data-cs-messages="speedometerForm.resource"></div>
+          </div>
+          <div class="form-group cs-select">
+            <label class="control-label" for="multipleFieldsItems">Select Fields</label>
+            <ui-select name="multipleFieldsItems" data-ng-model="config.multipleFieldsItems" multiple
+              class="custom-multi-select" tagging="undefined" tagging-label="false">
+              <ui-select-match placeholder="Select Fields">{{$item.title}}</ui-select-match>
+              <ui-select-choices repeat="option in pickListValue | filter: $select.search" refresh-delay="0"
+                ng-show="($select.items.length >= 0) || ">
+                <div ng-bind="option.title"></div>
+              </ui-select-choices>
+            </ui-select>
+            <span class="fa fa-sort-desc"></span>
+          </div>
+          <div data-cs-messages="speedometerForm.multipleFieldsItems"></div>
+          <div class="form-group">
+            <label class="control-label" for="picklistField">Select Picklist</label>
+            <select class="form-control" name="picklistField" id="picklistField"
+              data-ng-options="field.name as field.title for field in pickListFields" ng-model="config.picklistField">
+              <option value="">Select Picklist</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="pickListValue">Value</label>
+            <select class="form-control" name="pickListValue" id="pickListValue"
+              data-ng-options="field.name as field.title for field in pickListValue" ng-model="config.picklistValue">
+              <option value="">Value</option>
+            </select>
+          </div>
+      </div>
+  </div>
     <div class="modal-footer">
         <button id="edit-widget-save" type="submit" class="btn btn-sm btn-primary"><i
                 class="icon icon-check margin-right-sm"></i>Save</button>

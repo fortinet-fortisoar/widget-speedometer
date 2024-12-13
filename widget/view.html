@@ -17,31 +17,45 @@ Copyright end -->
     </div>
     <div data-ng-hide="collapsed">
         <div class="padding-left-lg padding-bottom-lg">
-            <div id="speedometer"
-                style="width: 300px; height: 300px; border-radius: 50%; display: flex; justify-content: center; align-items: center; position: relative;">
-                <svg width="300" height="300" viewBox="0 0 300 300">
-                    <!-- Background arc -->
-                    <path d="M 79.28 220.71 A 100 100 0 1 1 220.71 220.71" stroke="#444" stroke-width="20" fill="none"></path>
-                    <!-- Dynamic arc -->
-                    <path id="progress-arc" stroke="url(#gradient)" stroke-width="20" fill="none"></path>
-                    <!-- Gradient for the arc -->
-                    <defs>
-                        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" stop-color='{{startRiskColor}}' />
-                            <stop offset="100%" stop-color='{{stopRiskColor}}' />
-                        </linearGradient>
-                    </defs>
-                </svg>
-                <!-- Center value -->
-                <div class="needle" data-ng-style="{'background-color' : startRiskColor}"></div>
-                <div class="percentageCircle"></div>
-                <div class="riskPercentage" data-ng-style="{'color' : startRiskColor}">
-                    {{scoreValue}}
-                </div>
-                <div class="ng-binding confidenceClass text-capitalize">
-                    {{scoreField}} Risk</div>
-                <div class="ng-binding titleClass text-capitalize">
+            <div class="display-flex">
+                <div id="speedometer"
+                    style="width: 300px; height: 300px; border-radius: 50%; display: flex; justify-content: center; align-items: center; position: relative;">
+                    <svg width="300" height="300" viewBox="0 0 300 300">
+                        <!-- Background arc -->
+                        <path d="M 79.28 220.71 A 100 100 0 1 1 220.71 220.71" stroke="#444" stroke-width="20" fill="none"></path>
+                        <!-- Dynamic arc -->
+                        <path id="progress-arc" stroke="url(#gradient)" stroke-width="20" fill="none"></path>
+                        <!-- Gradient for the arc -->
+                        <defs>
+                            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color='{{startRiskColor}}' />
+                                <stop offset="100%" stop-color='{{stopRiskColor}}' />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <!-- Center value -->
+                    <div class="needle" data-ng-style="{'background-color' : startRiskColor}"></div>
+                    <div class="percentageCircle"></div>
+                    <div data-ng-if="processing" class="spinnerDiv" style="position: fixed;
+                    top: 270px;">
+                        <cs-spinner></cs-spinner>
+                    </div>
+                    <div class="riskPercentage" data-ng-style="{'color' : startRiskColor}">
+                        {{scoreValue}}
+                    </div>
+                    <div class="ng-binding confidenceClass text-capitalize">
+                        {{scoreField}} Risk</div>
+                    <div class="ng-binding titleClass text-capitalize">
                         FortiTip Live Rating</div>
+                </div>
+                <div class="align-self-center font-size-14em full-width tex text-center">
+                    <div>{{ indicator }}</div>
+                    <div data-ng-repeat="fieldItem in multipleFieldsItemsData">
+                        <span class="tags-style text-capitalize tagColor">
+                            <span style="width: 20px;">{{  fieldItem.field  }}: {{  fieldItem.value  }}</span>
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
