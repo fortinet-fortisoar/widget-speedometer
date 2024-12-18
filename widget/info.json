@@ -8,13 +8,10 @@
     "metadata": {
         "description": "Speedometer widget to showcase the percentage value",
         "pages": [
-            "Dashboard",
-            "View Panel",
-            "Reports",
-            "Listing"
+            "View Panel"
         ],
-        "certified": "No",
-        "publisher": null,
+        "certified": "Yes",
+        "publisher": "Fortinet",
         "compatibility": [
             "7.6.1"
         ],
