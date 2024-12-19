@@ -47,8 +47,8 @@ Copyright end -->
                     <div class="ng-binding titleClass text-capitalize">
                         FortiTip Live Rating</div>
                 </div>
-                <div class="align-self-center font-size-14em full-width tex text-center">
-                    <div>{{ indicator }}</div>
+                <div class="align-self-center font-size-14em width-40 text-center">
+                    <div class="truncate" title="{{indicator}}">{{ indicator }}</div>
                     <div data-ng-repeat="fieldItem in multipleFieldsItemsData">
                         <span class="tags-style text-capitalize tagColor">
                             <span style="width: 20px;">{{  fieldItem.field  }}: {{  fieldItem.value  }}</span>
