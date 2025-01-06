@@ -1,15 +1,12 @@
 <!-- Copyright start
     MIT License
-    Copyright (c) 2024 Fortinet Inc
+    Copyright (c) 2025 Fortinet Inc
 Copyright end -->
 
-<div class="widget widget-container chart">
+<div class="widget widget-container chart {{currentTheme}}">
     <div class="display-flex-space-between margin-chart">
-        <div class="padding-right-0 padding-left-0 widget-dashboard-title-width"
-            data-ng-class="(page === 'dashboard' || page === 'reporting') ? 'widget-dashboard-title-width' : 'widget-title-width'">
-            <h5 class="margin-top-0 margin-bottom-0 text-overflow ng-binding">{{config.title}}</h5>
-        </div>
-        <div class="padding-right-0 padding-left-0"
+        <h3 data-ng-bind="config.title" class="custom-label-size margin-bottom-0 section-border padding-left-md ng-binding" data-ng-show="::config.title" aria-hidden="false"></h3>
+        <div class="padding-right-0 padding-left-0"  data-ng-hide="!config.collapseWidget"
             data-ng-class="(page === 'dashboard' || page === 'reporting') ? 'widget-dashboard-actions-width' : 'widget-actions-width'">
             <span class="fa btn widget-action-icon btn-sm pull-right" data-ng-click="collapsed = !collapsed"
                 data-ng-class="{'fa-caret-up': !collapsed, 'fa-caret-down': collapsed}"></span>
