@@ -1,6 +1,6 @@
 /* Copyright start
     MIT License
-    Copyright (c) 2024 Fortinet Inc
+    Copyright (c) 2025 Fortinet Inc
 Copyright end */
 'use strict';
 (function () {
@@ -8,13 +8,14 @@ Copyright end */
     .module('cybersponse')
     .controller('speedometer100Ctrl', speedometer100Ctrl);
 
-  speedometer100Ctrl.$inject = ['$scope', 'widgetUtilityService', 'config', '$state', 'speedometerService', 'modelMetadatasService'];
+  speedometer100Ctrl.$inject = ['$scope', 'widgetUtilityService', 'config', '$state', 'speedometerService', 'modelMetadatasService', '$rootScope' ];
 
-  function speedometer100Ctrl($scope, widgetUtilityService, config, $state, speedometerService, modelMetadatasService) {
+  function speedometer100Ctrl($scope, widgetUtilityService, config, $state, speedometerService, modelMetadatasService, $rootScope) {
 
     $scope.config = config;
     $scope.pageState = $state;
     $scope.processing = true;
+    $scope.currentTheme = $rootScope.theme.id;
 
     function _handleTranslations() {
       widgetUtilityService.checkTranslationMode($scope.$parent.model.type).then(function () {
@@ -33,7 +34,7 @@ Copyright end */
       $scope.multipleFieldsItemsData = [];
         //to check if dataSource is present and fetch data from connector action or else from API query
         if(moduleMetaData.dataSource){ 
-          executeConnectorAction(moduleMetaData.dataSource);
+          getRecordDetails(moduleMetaData.dataSource);
         } 
     }
 
@@ -118,7 +119,8 @@ Copyright end */
       }
     }
 
-    function executeConnectorAction(_moduleMetaData){ 
+    //fetch record details through the connector action mentioned in the Data Source
+    function getRecordDetails(_moduleMetaData){ 
       let _connectorName = _moduleMetaData.connector;
       let _connectorAction = _moduleMetaData.operation;
       let payload = { 'indicator': $scope.indicator };
