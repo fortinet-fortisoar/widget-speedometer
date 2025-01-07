@@ -8,9 +8,9 @@ Copyright end */
     .module('cybersponse')
     .controller('speedometer100Ctrl', speedometer100Ctrl);
 
-  speedometer100Ctrl.$inject = ['$scope', 'widgetUtilityService', 'config', '$state', 'speedometerService', 'modelMetadatasService', '$rootScope', 'localStorageService', '_'];
+  speedometer100Ctrl.$inject = ['$q','$scope', 'widgetUtilityService', 'config', '$state', 'speedometerService', 'modelMetadatasService', '$rootScope', 'localStorageService', '_'];
 
-  function speedometer100Ctrl($scope, widgetUtilityService, config, $state, speedometerService, modelMetadatasService, $rootScope, localStorageService, _) {
+  function speedometer100Ctrl($q, $scope, widgetUtilityService, config, $state, speedometerService, modelMetadatasService, $rootScope, localStorageService, _) {
 
     $scope.config = config;
     $scope.pageState = $state;
@@ -68,9 +68,10 @@ Copyright end */
 
     function updateSpeedometer(percentage) {
       $scope.riskPercentage = percentage ? percentage : 0;
-      $scope.startRiskColor = getRiskScorePicklistColor($scope.scoreField).startRiskColor;
-      $scope.stopRiskColor = getRiskScorePicklistColor($scope.scoreField).endRiskColor;
-
+      getRiskScorePicklistColor($scope.scoreField).then(function(response){
+        $scope.startRiskColor = response.startRiskColor;
+        $scope.stopRiskColor = response.endRiskColor;
+      });
       const startAngle = 135; // Ensure alignment with background arc's start
       const endAngle = 135 + (percentage / 100) * 270; // Map percentage to 180-degree span
       const path = document.getElementById("progress-arc");
@@ -90,17 +91,29 @@ Copyright end */
       }, 10);
     }
 
-    //map risk color for grid risk column through Confidence picklist value
+    //map risk color for speedometer through Confidence picklist value using entity form fields
     function getRiskScorePicklistColor(riskKey) {
-      const _picklistField = 'IOC Search Confidence';
-      let picklists = localStorageService.get('picklists.' + _picklistField);
-      let color = '';
-      _.filter(picklists, function (element) {
-        if (element.itemValue === riskKey) {
-          color = element.color;
+      var defer = $q.defer();
+      var entity = new Entity($scope.config.resource);
+      entity.loadFields().then(function () {
+        let formFields = entity.getFormFields();
+        let _picklistValues = _.filter(formFields, function (field) {
+          return field.type === 'picklist' && field.name === $scope.config.picklistField;
+        });
+        if(_picklistValues.length > 0){
+          let color = '';
+          _.filter(_picklistValues[0].options, function (element) {
+            if (element.itemValue === riskKey) {
+              color = element.color;
+            }
+          });
+          defer.resolve({'startRiskColor' : color,  'endRiskColor': speedometerService.generateGradient(color, -30)});
+        }
+        else{
+          defer.reject();
         }
       });
-      return {'startRiskColor' : color,  'endRiskColor': speedometerService.generateGradient(color, -30)};
+      return defer.promise;
     }
 
     function checkCurrentPage(state){
