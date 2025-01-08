@@ -8,9 +8,9 @@ Copyright end */
     .module('cybersponse')
     .controller('speedometer100Ctrl', speedometer100Ctrl);
 
-  speedometer100Ctrl.$inject = ['$scope', 'widgetUtilityService', 'config', '$state', 'speedometerService', 'modelMetadatasService', '$rootScope' ];
+  speedometer100Ctrl.$inject = ['$q','$scope', 'widgetUtilityService', 'config', '$state', 'speedometerService', 'modelMetadatasService', '$rootScope', 'localStorageService', '_'];
 
-  function speedometer100Ctrl($scope, widgetUtilityService, config, $state, speedometerService, modelMetadatasService, $rootScope) {
+  function speedometer100Ctrl($q, $scope, widgetUtilityService, config, $state, speedometerService, modelMetadatasService, $rootScope, localStorageService, _) {
 
     $scope.config = config;
     $scope.pageState = $state;
@@ -68,9 +68,10 @@ Copyright end */
 
     function updateSpeedometer(percentage) {
       $scope.riskPercentage = percentage ? percentage : 0;
-      $scope.startRiskColor = mapRiskColor($scope.scoreField).startRiskColor;
-      $scope.stopRiskColor = mapRiskColor($scope.scoreField).endRiskColor;
-
+      getRiskScorePicklistColor($scope.scoreField).then(function(response){
+        $scope.startRiskColor = response.startRiskColor;
+        $scope.stopRiskColor = response.endRiskColor;
+      });
       const startAngle = 135; // Ensure alignment with background arc's start
       const endAngle = 135 + (percentage / 100) * 270; // Map percentage to 180-degree span
       const path = document.getElementById("progress-arc");
@@ -89,27 +90,30 @@ Copyright end */
         needle.style.transform = `rotate(${needleAngle}deg)`;
       }, 10);
     }
-  
-    function mapRiskColor(riskKey){
-      if (typeof riskKey != 'string') {
-        return '';
-      }
-      switch (riskKey.toLowerCase().trim()) {
-        case 'high':
-          return {'startRiskColor' : '#F66E4F',  'endRiskColor': '#E60C4B'};
-          break;
-        case 'low':
-          return {'startRiskColor' : '#fdfc00',  'endRiskColor': '#fac602'};
-          break;
-        case 'moderate':
-          return {'startRiskColor' : '#07de04',  'endRiskColor': '#6ac359'};
-          break;
-        case 'default':
-          return {'startRiskColor' : '#5596be',  'endRiskColor': '#1d7fbb'};
-        default:
-          return 
 
-      }
+    //map risk color for speedometer through Confidence picklist value using entity form fields
+    function getRiskScorePicklistColor(riskKey) {
+      var defer = $q.defer();
+      var entity = new Entity($scope.config.resource);
+      entity.loadFields().then(function () {
+        let formFields = entity.getFormFields();
+        let _picklistValues = _.filter(formFields, function (field) {
+          return field.type === 'picklist' && field.name === $scope.config.picklistField;
+        });
+        if(_picklistValues.length > 0){
+          let color = '';
+          _.filter(_picklistValues[0].options, function (element) {
+            if (element.itemValue === riskKey) {
+              color = element.color;
+            }
+          });
+          defer.resolve({'startRiskColor' : color,  'endRiskColor': speedometerService.generateGradient(color, -30)});
+        }
+        else{
+          defer.reject();
+        }
+      });
+      return defer.promise;
     }
 
     function checkCurrentPage(state){
