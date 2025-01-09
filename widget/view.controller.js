@@ -97,12 +97,12 @@ Copyright end */
       var entity = new Entity($scope.config.resource);
       entity.loadFields().then(function () {
         let formFields = entity.getFormFields();
-        let _picklistValues = _.find(formFields, function (field) {
+        let _picklistValues = _.filter(formFields, function (field) {
           return field.type === 'picklist' && field.name === $scope.config.picklistField;
         });
         if(_picklistValues.length > 0){
           let color = '';
-          _.filter(_picklistValues[0].options, function (element) {
+          _.find(_picklistValues[0].options, function (element) {
             if (element.itemValue === riskKey) {
               color = element.color;
             }
