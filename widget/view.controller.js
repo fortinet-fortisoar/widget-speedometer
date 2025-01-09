@@ -8,9 +8,9 @@ Copyright end */
     .module('cybersponse')
     .controller('speedometer100Ctrl', speedometer100Ctrl);
 
-  speedometer100Ctrl.$inject = ['$q','$scope', 'widgetUtilityService', 'config', '$state', 'speedometerService', 'modelMetadatasService', '$rootScope', 'localStorageService', '_'];
+  speedometer100Ctrl.$inject = ['$q','$scope', 'widgetUtilityService', 'config', '$state', 'speedometerService', 'modelMetadatasService', '$rootScope', 'Entity', '_'];
 
-  function speedometer100Ctrl($q, $scope, widgetUtilityService, config, $state, speedometerService, modelMetadatasService, $rootScope, localStorageService, _) {
+  function speedometer100Ctrl($q, $scope, widgetUtilityService, config, $state, speedometerService, modelMetadatasService, $rootScope, Entity, _) {
 
     $scope.config = config;
     $scope.pageState = $state;
@@ -97,7 +97,7 @@ Copyright end */
       var entity = new Entity($scope.config.resource);
       entity.loadFields().then(function () {
         let formFields = entity.getFormFields();
-        let _picklistValues = _.filter(formFields, function (field) {
+        let _picklistValues = _.find(formFields, function (field) {
           return field.type === 'picklist' && field.name === $scope.config.picklistField;
         });
         if(_picklistValues.length > 0){
