@@ -1,5 +1,8 @@
 {
     "speedometer": {
-        "KEY_NAME": ""
+        "ERROR_NO_INFORMATION_AVAILABLE": "No information available",
+        "HEADER_EDIT_SPEEDOMETER": "Edit Speedometer",
+        "HEADER_ADD_SPEEDOMETER": "Add Speedometer",
+        "LABEL_DESCRIPTION": "Description"
     }
 }
