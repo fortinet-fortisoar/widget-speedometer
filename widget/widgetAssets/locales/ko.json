@@ -1,5 +1,8 @@
 {
     "speedometer": {
-        "KEY_NAME": ""
-    }
+        "ERROR_NO_INFORMATION_AVAILABLE": "정보를 사용할 수 없습니다",
+        "HEADER_EDIT_SPEEDOMETER": "스피도미터 편집",
+        "HEADER_ADD_SPEEDOMETER": "스피도미터 추가",
+        "LABEL_DESCRIPTION": "설명"
+    }    
 }

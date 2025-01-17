@@ -1,5 +1,8 @@
 {
     "speedometer": {
-        "KEY_NAME": ""
-    }
+        "ERROR_NO_INFORMATION_AVAILABLE": "暂无信息",
+        "HEADER_EDIT_SPEEDOMETER": "编辑速度表",
+        "HEADER_ADD_SPEEDOMETER": "添加速度表",
+        "LABEL_DESCRIPTION": "描述"
+    }    
 }

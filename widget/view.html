@@ -33,7 +33,7 @@ Copyright end -->
                     <!-- Center value -->
                     <div class="needle" data-ng-style="{'background-color' : startRiskColor}"></div>
                     <div class="percentageCircle"></div>
-                    <div data-ng-if="processing" class="position-fixed">
+                    <div data-ng-if="processing" class="position-absolute">
                         <cs-spinner></cs-spinner>
                     </div>
                     <div class="riskPercentage" data-ng-style="{'color' : startRiskColor}">
@@ -42,7 +42,7 @@ Copyright end -->
                     <div class="ng-binding confidenceClass text-capitalize">
                         {{scoreField}} </div>
                     <div class="ng-binding titleClass text-capitalize">
-                        FortiTip Live Rating</div>
+                        {{ config.descriptionLabel }}</div>
                 </div>
                 <div class="align-self-center font-size-14em width-40 text-center">
                     <div class="truncate" title="{{indicator}}">{{ indicator }}</div>

@@ -5,7 +5,7 @@ Copyright end -->
 <form data-ng-submit="save()" class="noMargin" name="speedometerForm" data-ng-class="{'state-wait': processing }"
     novalidate>
     <div class="modal-header">
-        <h3 class="modal-title col-md-9">Edit speedometer</h3>
+        <h3 class="modal-title col-md-9" data-ng-bind="::header"></h3>
         <button type="button" class="close" data-ng-click="cancel()" data-dismiss="modal" aria-label="Close"
             id="close-edit-widget-form-btn">
             <div aria-hidden="true" class="version-button">+</div>
@@ -13,28 +13,37 @@ Copyright end -->
     </div>
     <div class="modal-body">
       <div>
-          <div class="form-group" data-ng-class="{ 'has-error': speedometerForm.title.$invalid && speedometerForm.title.$touched }">
-              <label for="title" class="control-label">{{'COMPONENTS.VIEW_TEMPLATES.WIDGETS.CHART.TITLE' | translate}}<span class="text-danger">*</span>
-              </label>
-              <input id="title" name="title" type="text" class="form-control" data-ng-model="config.title" required>
-              <div data-cs-messages="speedometerForm.title"></div>
-            </div>
+          <div class="form-group"
+            data-ng-class="{ 'has-error': speedometerForm.title.$invalid && speedometerForm.title.$touched }">
+            <label for="title" class="control-label">{{'COMPONENTS.VIEW_TEMPLATES.WIDGETS.CHART.TITLE' | translate}}<span
+                class="text-danger">*</span>
+            </label>
+            <input id="title" name="title" type="text" class="form-control" data-ng-model="config.title" required>
+            <div data-cs-messages="speedometerForm.title"></div>
+          </div>
+          <div class="form-group"
+            data-ng-class="{ 'has-error': speedometerForm.descriptionLabel.$invalid && speedometerForm.descriptionLabel.$touched }">
+            <label for="descriptionLabel" class="control-label">{{viewWidgetVars.LABEL_DESCRIPTION}}
+            </label>
+            <input id="descriptionLabel" name="descriptionLabel" type="text" class="form-control" data-ng-model="config.descriptionLabel">
+            <div data-cs-messages="speedometerForm.descriptionLabel"></div>
+          </div>
           <div class="form-group"
             data-ng-class="{ 'has-error': speedometerForm.resource.$invalid && speedometerForm.resource.$touched }"
             data-ng-if="modules">
-            <label for="resource" class="control-label">{{viewWidgetVars.LABEL_DATA_SOURCE}}<span class="text-danger">*</span></label>
+            <label for="resource" class="control-label">{{'COMPONENTS.VIEW_TEMPLATES.WIDGETS.CHART.DATA_SOURCE' | translate}}<span class="text-danger">*</span></label>
             <select name="resource" id="resource" class="form-control"
               data-ng-options="module.type as module.name for module in modules" data-ng-model="config.resource"
               required data-ng-change="loadAttributes()">
-              <option value="">{{viewWidgetVars.LABEL_SELECT_AN_OPTION}}</option>
+              <option value="">{{'APP.LABEL.SELECT_AN_OPTION' | translate}}</option>
             </select>
             <div data-cs-messages="speedometerForm.resource"></div>
           </div>
           <div class="form-group cs-select">
-            <label class="control-label" for="multipleFieldsItems">Select Fields</label>
+            <label class="control-label" for="multipleFieldsItems">{{'COMPONENTS.VIEW_TEMPLATES.WIDGETS.RECOMMENDATION.SELECT_FIELDS' | translate}}</label>
             <ui-select name="multipleFieldsItems" data-ng-model="config.multipleFieldsItems" multiple
               class="custom-multi-select" tagging="undefined" tagging-label="false">
-              <ui-select-match placeholder="Select Fields">{{$item.title}}</ui-select-match>
+              <ui-select-match placeholder="{{'COMPONENTS.VIEW_TEMPLATES.WIDGETS.RECOMMENDATION.SELECT_FIELDS' | translate}}">{{$item.title}}</ui-select-match>
               <ui-select-choices repeat="option in pickListValue | filter: $select.search" refresh-delay="0"
                 ng-show="($select.items.length >= 0) || ">
                 <div ng-bind="option.title"></div>
@@ -44,25 +53,25 @@ Copyright end -->
           </div>
           <div data-cs-messages="speedometerForm.multipleFieldsItems"></div>
           <div class="form-group">
-            <label class="control-label" for="picklistField">Select Picklist</label>
+            <label class="control-label" for="picklistField">{{'COMPONENTS.JINJA.SELECT_PICKLIST' | translate}} <span class="text-danger">*</span></label>
             <select class="form-control" name="picklistField" id="picklistField"
-              data-ng-options="field.name as field.title for field in pickListFields" ng-model="config.picklistField">
-              <option value="">Select Picklist</option>
+              data-ng-options="field.name as field.title for field in pickListFields" ng-model="config.picklistField" required>
+              <option value="">{{'COMPONENTS.FILTER.CONDITIONAL.SELECT_A_FIELD' | translate}}</option>
             </select>
           </div>
           <div class="form-group">
-            <label class="control-label" for="pickListValue">Value</label>
+            <label class="control-label" for="pickListValue">{{'COMPONENTS.VIEW_TEMPLATES.WIDGETS.FILTER.VALUE' | translate}} <span class="text-danger">*</span></label>
             <select class="form-control" name="pickListValue" id="pickListValue"
-              data-ng-options="field.name as field.title for field in pickListValue" ng-model="config.picklistValue">
-              <option value="">Value</option>
+              data-ng-options="field.name as field.title for field in pickListValue" ng-model="config.picklistValue" required>
+              <option value="">{{'COMPONENTS.FILTER.CONDITIONAL.SELECT_A_FIELD' | translate}}</option>
             </select>
           </div>
       </div>
   </div>
     <div class="modal-footer">
         <button id="edit-widget-save" type="submit" class="btn btn-sm btn-primary"><i
-                class="icon icon-check margin-right-sm"></i>Save</button>
+                class="icon icon-check margin-right-sm"></i>{{'APP.BUTTON.SAVE' | translate}}</button>
         <button id="edit-widget-cancel" type="button" class="btn btn-sm btn-default" data-ng-click="cancel()"><i
-                class="icon icon-close margin-right-sm"></i>Close</button>
+                class="icon icon-close margin-right-sm"></i>{{'APP.BUTTON.CANCEL' | translate}}</button>
     </div>
 </form>

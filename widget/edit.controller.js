@@ -22,15 +22,17 @@ Copyright end */
           widgetUtilityService.checkTranslationMode(widgetNameVersion).then(function () {
             $scope.viewWidgetVars = {
               // Create your translating static string variables here
-              LABEL_SELECT_AN_OPTION: "Select an Option",
-              LABEL_DATA_SOURCE: "Data Source"
+              HEADER_EDIT_SPEEDOMETER: widgetUtilityService.translate('speedometer.HEADER_EDIT_SPEEDOMETER'),
+              HEADER_ADD_SPEEDOMETER: widgetUtilityService.translate('speedometer.HEADER_ADD_SPEEDOMETER'),
+              LABEL_DESCRIPTION: widgetUtilityService.translate('speedometer.LABEL_DESCRIPTION')
             };
+            $scope.header = $scope.config.title ? $scope.viewWidgetVars.HEADER_EDIT_SPEEDOMETER : $scope.viewWidgetVars.HEADER_ADD_SPEEDOMETER;
+            loadModules();
           });
-          loadModules();
         } else {
           $timeout(function() {
-            $scope.cancel();
-          });
+            cancel();
+          },100);
         }
       }
 
