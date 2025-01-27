@@ -1,12 +1,12 @@
 {
     "name": "speedometer",
     "title": "Speedometer",
-    "subTitle": "Speedometer widget",
+    "subTitle": "Speedometer widget displays the percentage value",
     "version": "1.0.0",
     "published_date": 1733218494,
     "releaseNotes": "unavailable",
     "metadata": {
-        "description": "Speedometer widget to showcase the percentage value",
+        "description": "Speedometer widget displays the percentage value of selected parameter.",
         "pages": [
             "View Panel"
         ],
@@ -16,11 +16,8 @@
             "7.6.1"
         ],
         "category": [
-            "Data Enrichment & Threat Intelligence",
-            "Breach and Attack Simulation (BAS)",
-            "Monitoring",
             "Threat Intelligence",
-            "Threat Detection"
+            "Vulnerability and Risk Management"
         ]
     },
     "development": false

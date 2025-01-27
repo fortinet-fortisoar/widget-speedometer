@@ -26,13 +26,22 @@ Copyright end */
 
 .percentageCircle{
   position: absolute;
-  background: #323b4b;
   height: 75px;
   width: 75px;
   border: 4px solid;
   border-radius: inherit;
-  border-color: #262e3c
 }
+
+.percentageCircle.light{
+    background: #cfd8dc;
+    border-color: #9aa2a5
+  }
+
+.percentageCircle.dark,  .percentageCircle.steel{
+    background: #323b4b;
+    border-color: #262e3c;
+}
+
 
 .confidenceClass{
   position: absolute;

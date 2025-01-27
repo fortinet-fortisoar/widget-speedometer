@@ -16,7 +16,8 @@ Copyright end */
     $scope.pageState = $state;
     $scope.processing = true;
     $scope.currentTheme = $rootScope.theme.id;
-
+    $scope.backgroundArcStroke = $scope.currentTheme ==='light' ? '#9aa2a5' : '#444';
+    
     function _handleTranslations() {
       widgetUtilityService.checkTranslationMode($scope.$parent.model.type).then(function () {
         $scope.viewWidgetVars = {
