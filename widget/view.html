@@ -19,7 +19,7 @@ Copyright end -->
                     style="width: 300px; height: 300px; border-radius: 50%; display: flex; justify-content: center; align-items: center; position: relative;">
                     <svg width="300" height="300" viewBox="0 0 300 300">
                         <!-- Background arc -->
-                        <path d="M 79.28 220.71 A 100 100 0 1 1 220.71 220.71" stroke="#444" stroke-width="20" fill="none"></path>
+                        <path d="M 79.28 220.71 A 100 100 0 1 1 220.71 220.71" stroke="{{backgroundArcStroke}}" stroke-width="20" fill="none"></path>
                         <!-- Dynamic arc -->
                         <path id="progress-arc" stroke="url(#gradient)" stroke-width="20" fill="none"></path>
                         <!-- Gradient for the arc -->
@@ -32,7 +32,7 @@ Copyright end -->
                     </svg>
                     <!-- Center value -->
                     <div class="needle" data-ng-style="{'background-color' : startRiskColor}"></div>
-                    <div class="percentageCircle"></div>
+                    <div class="percentageCircle {{currentTheme}}"></div>
                     <div data-ng-if="processing" class="position-absolute">
                         <cs-spinner></cs-spinner>
                     </div>
