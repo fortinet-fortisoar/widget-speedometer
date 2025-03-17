@@ -38,7 +38,7 @@ Copyright end */
   }
 
 .percentageCircle.dark,  .percentageCircle.steel{
-    background: #323b4b;
+    background: #1d2126;
     border-color: #262e3c;
 }
 
@@ -57,7 +57,7 @@ Copyright end */
 
 .riskPercentage{
   position: absolute; 
-  font-size: 34px;
+  font-size: 24px;
 }
 
 .tagColor{
