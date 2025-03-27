@@ -3,7 +3,7 @@
     Copyright (c) 2025 Fortinet Inc
 Copyright end -->
 
-<div class="widget widget-container chart {{currentTheme}}">
+<div class="widget widget-container section-widget chart {{currentTheme}}">
     <div class="display-flex-space-between margin-chart">
         <h3 data-ng-bind="config.title" class="custom-label-size margin-bottom-0 padding-left-md ng-binding" data-ng-show="::config.title" aria-hidden="false"></h3>
         <div class="padding-right-0 padding-left-0"  data-ng-hide="!config.collapseWidget"
@@ -13,8 +13,8 @@ Copyright end -->
         </div>
     </div>
     <div data-ng-hide="collapsed">
-        <div class="padding-left-lg padding-bottom-lg">
-            <div class="display-flex">
+        <div class="padding-bottom-lg">
+            <div class="display-flex justify-content">
                 <div class="align-self-center font-size-14em width-40 text-center">
                     <div class="truncate" title="{{indicator}}">{{ indicator }}</div>
                     <div data-ng-repeat="fieldItem in multipleFieldsItemsData">
