@@ -14,6 +14,7 @@ Copyright end */
       $scope.cancel = cancel;
       $scope.save = save;
       $scope.config = config;
+      $scope.isConfigurable = false;
     
       function _handleTranslations() {
         let widgetNameVersion = widgetUtilityService.getWidgetNameVersion($scope.$resolve.widget, $scope.$resolve.widgetBasePath);
@@ -24,7 +25,8 @@ Copyright end */
               // Create your translating static string variables here
               HEADER_EDIT_SPEEDOMETER: widgetUtilityService.translate('speedometer.HEADER_EDIT_SPEEDOMETER'),
               HEADER_ADD_SPEEDOMETER: widgetUtilityService.translate('speedometer.HEADER_ADD_SPEEDOMETER'),
-              LABEL_DESCRIPTION: widgetUtilityService.translate('speedometer.LABEL_DESCRIPTION')
+              LABEL_DESCRIPTION: widgetUtilityService.translate('speedometer.LABEL_DESCRIPTION'),
+              LABEL_NOT_CONFIGURABLE: widgetUtilityService.translate('speedometer.LABEL_NOT_CONFIGURABLE')
             };
             $scope.header = $scope.config.title ? $scope.viewWidgetVars.HEADER_EDIT_SPEEDOMETER : $scope.viewWidgetVars.HEADER_ADD_SPEEDOMETER;
             loadModules();
