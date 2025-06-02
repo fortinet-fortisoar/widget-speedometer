@@ -12,7 +12,10 @@ Copyright end -->
         </button>
     </div>
     <div class="modal-body">
-      <div>
+      <div data-ng-if="!isConfigurable">
+        <span class="ng-binding">{{viewWidgetVars.LABEL_NOT_CONFIGURABLE}}</span>
+      </div>
+      <div data-ng-if="isConfigurable">
           <div class="form-group"
             data-ng-class="{ 'has-error': speedometerForm.title.$invalid && speedometerForm.title.$touched }">
             <label for="title" class="control-label">{{'COMPONENTS.VIEW_TEMPLATES.WIDGETS.CHART.TITLE' | translate}}<span
@@ -69,9 +72,13 @@ Copyright end -->
       </div>
   </div>
     <div class="modal-footer">
+      <button id="edit-widget-save" type="submit" class="btn btn-sm btn-primary" data-ng-if="!isConfigurable"><i
+        class="icon icon-check margin-right-sm"></i>{{'APP.BUTTON.OK' | translate}}</button>
+        <div data-ng-if="isConfigurable">
         <button id="edit-widget-save" type="submit" class="btn btn-sm btn-primary"><i
                 class="icon icon-check margin-right-sm"></i>{{'APP.BUTTON.SAVE' | translate}}</button>
         <button id="edit-widget-cancel" type="button" class="btn btn-sm btn-default" data-ng-click="cancel()"><i
                 class="icon icon-close margin-right-sm"></i>{{'APP.BUTTON.CANCEL' | translate}}</button>
+        </div>
     </div>
 </form>

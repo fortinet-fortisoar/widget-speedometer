@@ -3,6 +3,7 @@
         "ERROR_NO_INFORMATION_AVAILABLE": "No information available",
         "HEADER_EDIT_SPEEDOMETER": "Edit Speedometer",
         "HEADER_ADD_SPEEDOMETER": "Add Speedometer",
-        "LABEL_DESCRIPTION": "Description"
+        "LABEL_DESCRIPTION": "Description",
+        "LABEL_NOT_CONFIGURABLE": "このウィジェットはバンドルされており、単体では使用できません"
     }
 }
