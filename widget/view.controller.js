@@ -1,20 +1,23 @@
 /* Copyright start
-  Copyright (C) 2008 - 2024 Fortinet Inc.
-  All rights reserved.
-  FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE
-  Copyright end */
+    MIT License
+    Copyright (c) 2025 Fortinet Inc
+Copyright end */
 'use strict';
 (function () {
   angular
     .module('cybersponse')
     .controller('speedometer100Ctrl', speedometer100Ctrl);
 
-  speedometer100Ctrl.$inject = ['$scope', 'widgetUtilityService', 'config'];
+  speedometer100Ctrl.$inject = ['$q','$scope', 'widgetUtilityService', 'config', '$state', 'speedometerService', 'modelMetadatasService', '$rootScope', 'Entity', '_'];
 
-  function speedometer100Ctrl($scope, widgetUtilityService, config) {
+  function speedometer100Ctrl($q, $scope, widgetUtilityService, config, $state, speedometerService, modelMetadatasService, $rootScope, Entity, _) {
 
     $scope.config = config;
-
+    $scope.pageState = $state;
+    $scope.processing = true;
+    $scope.currentTheme = $rootScope.theme.id;
+    $scope.backgroundArcStroke = $scope.currentTheme ==='light' ? '#9aa2a5' : '#444';
+    
     function _handleTranslations() {
       widgetUtilityService.checkTranslationMode($scope.$parent.model.type).then(function () {
         $scope.viewWidgetVars = {
@@ -26,7 +29,14 @@
     function init() {
       // To handle backward compatibility for widget
       _handleTranslations();
-      updateSpeedometer($scope.config.score);
+      checkCurrentPage($scope.pageState);
+      var moduleMetaData = modelMetadatasService.getMetadataByModuleType($scope.config.resource);
+      $scope.multipleFieldsItems = $scope.config.multipleFieldsItems;
+      $scope.multipleFieldsItemsData = [];
+        //to check if dataSource is present and fetch data from connector action or else from API query
+        if(moduleMetaData.dataSource){ 
+          getRecordDetails(moduleMetaData.dataSource);
+        } 
     }
 
     function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
@@ -58,10 +68,11 @@
     }
 
     function updateSpeedometer(percentage) {
-      $scope.riskPercentage = percentage;
-      $scope.startRiskColor = mapRiskColor($scope.config.confidence).startRiskColor;
-      $scope.stopRiskColor = mapRiskColor($scope.config.confidence).endRiskColor;
-
+      $scope.riskPercentage = percentage ? percentage : 0;
+      getRiskScorePicklistColor($scope.scoreField).then(function(response){
+        $scope.startRiskColor = response.startRiskColor;
+        $scope.stopRiskColor = response.endRiskColor;
+      });
       const startAngle = 135; // Ensure alignment with background arc's start
       const endAngle = 135 + (percentage / 100) * 270; // Map percentage to 180-degree span
       const path = document.getElementById("progress-arc");
@@ -80,27 +91,68 @@
         needle.style.transform = `rotate(${needleAngle}deg)`;
       }, 10);
     }
-  
-    function mapRiskColor(riskKey){
-      if (typeof riskKey != 'string') {
-        return '';
-      }
-      switch (riskKey.toLowerCase().trim()) {
-        case 'high':
-          return {'startRiskColor' : '#F66E4F',  'endRiskColor': '#E60C4B'};
-          break;
-        case 'low':
-          return {'startRiskColor' : '#fdfc00',  'endRiskColor': '#fac602'};
-          break;
-        case 'moderate':
-          return {'startRiskColor' : '#07de04',  'endRiskColor': '#6ac359'};
-          break;
-        case 'default':
-          return {'startRiskColor' : '#5596be',  'endRiskColor': '#1d7fbb'};
-        default:
-          return 
 
+    //map risk color for speedometer through Confidence picklist value using entity form fields
+    function getRiskScorePicklistColor(riskKey) {
+      var defer = $q.defer();
+      var entity = new Entity($scope.config.resource);
+      entity.loadFields().then(function () {
+        let formFields = entity.getFormFields();
+        let _picklistValues = _.filter(formFields, function (field) {
+          return field.type === 'picklist' && field.name === $scope.config.picklistField;
+        });
+        if(_picklistValues.length > 0){
+          let color = '';
+          _.find(_picklistValues[0].options, function (element) {
+            if (element.itemValue === riskKey) {
+              color = element.color;
+            }
+          });
+          defer.resolve({'startRiskColor' : color,  'endRiskColor': speedometerService.generateGradient(color, -30)});
+        }
+        else{
+          defer.reject();
+        }
+      });
+      return defer.promise;
+    }
+
+    function checkCurrentPage(state){
+      if (state.current.name.includes('viewPanel.modulesDetail')) {
+        let params = $scope.pageState.current.params;
+        $scope.indicator = params.id;
       }
+    }
+
+    //fetch record details through the connector action mentioned in the Data Source
+    function getRecordDetails(_moduleMetaData){ 
+      let _connectorName = _moduleMetaData.connector;
+      let _connectorAction = _moduleMetaData.operation;
+      let payload = { 'indicator': $scope.indicator };
+      var valueParameter = $scope.config.picklistValue;
+      var fieldParameter = $scope.config.picklistField;
+
+      speedometerService.executeAction(_connectorName, _connectorAction, payload).then(function (response) {
+        if(response && response.data)
+        {
+          $scope.processing = false;
+          $scope.scoreValue = response.data[valueParameter];
+          $scope.scoreField = response.data[fieldParameter].itemValue;
+          updateSpeedometer($scope.scoreValue);
+          setMultipleFieldsData(response.data);
+        }
+      });
+    }
+
+    function setMultipleFieldsData(_responseData){
+      $scope.multipleFieldsItems.forEach(element => {
+        if (_responseData[element.name]) {
+          $scope.multipleFieldsItemsData.push({
+            'field': element.title,
+            'value': _responseData[element.name]
+          });
+        }
+      });
     }
 
     init();
