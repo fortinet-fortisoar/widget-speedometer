@@ -1,0 +1,24 @@
+{
+    "name": "speedometer",
+    "title": "Speedometer",
+    "subTitle": "Speedometer widget displays the percentage value",
+    "version": "1.0.0",
+    "published_date": 1733218494,
+    "releaseNotes": "unavailable",
+    "metadata": {
+        "description": "Speedometer widget displays the percentage value of selected parameter.",
+        "pages": [
+            "View Panel"
+        ],
+        "certified": "Yes",
+        "publisher": "Fortinet",
+        "compatibility": [
+            "7.6.1"
+        ],
+        "category": [
+            "Threat Intelligence",
+            "Vulnerability and Risk Management"
+        ]
+    },
+    "development": false
+}

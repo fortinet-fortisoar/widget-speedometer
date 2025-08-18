@@ -1,0 +1,58 @@
+<!-- Copyright start
+    MIT License
+    Copyright (c) 2025 Fortinet Inc
+Copyright end -->
+
+<div class="widget widget-container section-widget chart {{currentTheme}}">
+    <div class="display-flex-space-between margin-chart">
+        <h3 data-ng-bind="config.title" class="custom-label-size margin-bottom-0 padding-left-md ng-binding" data-ng-show="::config.title" aria-hidden="false"></h3>
+        <div class="padding-right-0 padding-left-0"  data-ng-hide="!config.collapseWidget"
+            data-ng-class="(page === 'dashboard' || page === 'reporting') ? 'widget-dashboard-actions-width' : 'widget-actions-width'">
+            <span class="fa btn widget-action-icon btn-sm pull-right" data-ng-click="collapsed = !collapsed"
+                data-ng-class="{'fa-caret-up': !collapsed, 'fa-caret-down': collapsed}"></span>
+        </div>
+    </div>
+    <div data-ng-hide="collapsed">
+        <div class="padding-bottom-lg">
+            <div class="display-flex justify-content">
+                <div class="align-self-center font-size-14em width-40 text-center">
+                    <div class="truncate" title="{{indicator}}">{{ indicator }}</div>
+                    <div data-ng-repeat="fieldItem in multipleFieldsItemsData">
+                        <span class="tags-style text-capitalize tagColor">
+                            <span style="width: 20px;">{{  fieldItem.field  }}: {{  fieldItem.value  }}</span>
+                        </span>
+                    </div>
+                </div>
+                <div id="speedometer"
+                    style="width: 300px; height: 300px; border-radius: 50%; display: flex; justify-content: center; align-items: center; position: relative;">
+                    <svg width="300" height="300" viewBox="0 0 300 300">
+                        <!-- Background arc -->
+                        <path d="M 79.28 220.71 A 100 100 0 1 1 220.71 220.71" stroke="{{backgroundArcStroke}}" stroke-width="20" fill="none"></path>
+                        <!-- Dynamic arc -->
+                        <path id="progress-arc" stroke="url(#gradient)" stroke-width="20" fill="none"></path>
+                        <!-- Gradient for the arc -->
+                        <defs>
+                            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color='{{startRiskColor}}' />
+                                <stop offset="100%" stop-color='{{stopRiskColor}}' />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <!-- Center value -->
+                    <div class="needle" data-ng-style="{'background-color' : startRiskColor}"></div>
+                    <div class="percentageCircle {{currentTheme}}"></div>
+                    <div data-ng-if="processing" class="position-absolute">
+                        <cs-spinner></cs-spinner>
+                    </div>
+                    <div class="riskPercentage" data-ng-style="{'color' : startRiskColor}">
+                        {{scoreValue}}
+                    </div>
+                    <div class="ng-binding confidenceClass text-capitalize">
+                        {{scoreField}} </div>
+                    <div class="ng-binding titleClass text-capitalize">
+                        {{ config.descriptionLabel }}</div>
+                </div>   
+            </div>
+        </div>
+    </div>
+</div>

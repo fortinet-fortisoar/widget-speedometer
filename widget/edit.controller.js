@@ -1,0 +1,104 @@
+/* Copyright start
+    MIT License
+    Copyright (c) 2025 Fortinet Inc
+Copyright end */
+'use strict';
+(function () {
+    angular
+        .module('cybersponse')
+        .controller('editSpeedometer100Ctrl', editSpeedometer100Ctrl);
+
+    editSpeedometer100Ctrl.$inject = ['$scope', '$uibModalInstance', 'config', 'widgetUtilityService', '$timeout','appModulesService', 'Entity', 'modelMetadatasService'];
+
+    function editSpeedometer100Ctrl($scope, $uibModalInstance, config, widgetUtilityService, $timeout, appModulesService, Entity, modelMetadatasService) {
+      $scope.cancel = cancel;
+      $scope.save = save;
+      $scope.config = config;
+      $scope.isConfigurable = false;
+    
+      function _handleTranslations() {
+        let widgetNameVersion = widgetUtilityService.getWidgetNameVersion($scope.$resolve.widget, $scope.$resolve.widgetBasePath);
+        
+        if (widgetNameVersion) {
+          widgetUtilityService.checkTranslationMode(widgetNameVersion).then(function () {
+            $scope.viewWidgetVars = {
+              // Create your translating static string variables here
+              HEADER_EDIT_SPEEDOMETER: widgetUtilityService.translate('speedometer.HEADER_EDIT_SPEEDOMETER'),
+              HEADER_ADD_SPEEDOMETER: widgetUtilityService.translate('speedometer.HEADER_ADD_SPEEDOMETER'),
+              LABEL_DESCRIPTION: widgetUtilityService.translate('speedometer.LABEL_DESCRIPTION'),
+              LABEL_NOT_CONFIGURABLE: widgetUtilityService.translate('speedometer.LABEL_NOT_CONFIGURABLE')
+            };
+            $scope.header = $scope.config.title ? $scope.viewWidgetVars.HEADER_EDIT_SPEEDOMETER : $scope.viewWidgetVars.HEADER_ADD_SPEEDOMETER;
+            loadModules();
+          });
+        } else {
+          $timeout(function() {
+            cancel();
+          },100);
+        }
+      }
+
+      function loadModules() {
+        appModulesService.load(true).then(function (modules) {
+          $scope.modules = modules;
+          //Create a list of modules with atleast one JSON field
+          $scope.modules.forEach((module) => {
+            var moduleMetaData = modelMetadatasService.getMetadataByModuleType(module.type);
+            for (let fieldIndex = 0; fieldIndex < moduleMetaData.attributes.length; fieldIndex++) {
+              //Check If JSON field is present in the module
+              if (moduleMetaData.attributes[fieldIndex].type === "object") {
+                $scope.jsonObjModuleList.push(module);
+                break;
+              }
+            }
+          });
+        });
+        if ($scope.config.resource) {
+          $scope.loadAttributes();
+        }
+      }
+
+      $scope.loadAttributes = function() {
+        $scope.fields = [];
+        $scope.fieldsArray = [];
+        $scope.pickListFields = [];
+        $scope.pickListValue = [];
+        $scope.userField = [];
+        $scope.multipleFields = [];
+        var entity = new Entity($scope.config.resource);
+        entity.loadFields().then(function() {
+          for (var key in entity.fields) {
+            if (entity.fields[key].type === 'datetime') {
+              entity.fields[key].type = 'datetime.quick';
+            } else if (entity.fields[key].type === 'picklist') {
+              $scope.pickListFields.push(entity.fields[key]);
+            } else if(entity.fields[key].type === 'text'){
+              $scope.pickListValue.push(entity.fields[key]);
+            }
+
+          }
+  
+          $scope.fields = entity.getFormFields();
+          angular.extend($scope.fields, entity.getRelationshipFields());
+          $scope.fieldsArray = entity.getFormFieldsArray();
+        });
+      };
+
+      
+      function init() {
+          // To handle backward compatibility for widget
+          _handleTranslations();
+      }
+
+      init();
+
+      function cancel() {
+          $uibModalInstance.dismiss('cancel');
+      }
+
+      function save() {
+          $uibModalInstance.close($scope.config);
+      }
+
+    }
+})();

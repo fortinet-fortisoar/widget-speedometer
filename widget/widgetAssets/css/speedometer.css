@@ -1,0 +1,65 @@
+/* Copyright start
+    MIT License
+    Copyright (c) 2025 Fortinet Inc
+Copyright end */
+
+.light {
+  color: #7b7b7b;
+}
+
+.dark .steel {
+  color: #FFF;
+}
+
+/* Needle styling */
+.needle {
+  position: absolute;
+  width: 5px;
+  height: 80px;
+  top: 67px;
+  left: 50%;
+  transform-origin: 50% 100%;
+  transition: transform 1s ease;
+  transform: rotate(-135deg);
+  border-radius: inherit; 
+}
+
+.percentageCircle{
+  position: absolute;
+  height: 75px;
+  width: 75px;
+  border: 4px solid;
+  border-radius: inherit;
+}
+
+.percentageCircle.light{
+    background: #cfd8dc;
+    border-color: #9aa2a5
+  }
+
+.percentageCircle.dark,  .percentageCircle.steel{
+    background: #1d2126;
+    border-color: #262e3c;
+}
+
+
+.confidenceClass{
+  position: absolute;
+  font-size: 1em;
+  top: 250px;
+}
+
+.titleClass{
+  position: absolute;
+  font-size: 1em;
+  top: 275px;
+}
+
+.riskPercentage{
+  position: absolute; 
+  font-size: 24px;
+}
+
+.tagColor{
+  background-color: '#329CAD';
+}
