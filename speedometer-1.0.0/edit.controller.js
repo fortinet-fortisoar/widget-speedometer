@@ -14,7 +14,7 @@ Copyright end */
       $scope.cancel = cancel;
       $scope.save = save;
       $scope.config = config;
-      $scope.isConfigurable = true;
+      $scope.isConfigurable = false;
     
       function _handleTranslations() {
         let widgetNameVersion = widgetUtilityService.getWidgetNameVersion($scope.$resolve.widget, $scope.$resolve.widgetBasePath);
