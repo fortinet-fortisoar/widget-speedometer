@@ -6,11 +6,11 @@ Copyright end */
 (function () {
   angular
     .module('cybersponse')
-    .controller('speedometer100Ctrl', speedometer100Ctrl);
+    .controller('speedometer110Ctrl', speedometer110Ctrl);
 
-  speedometer100Ctrl.$inject = ['$q','$scope', 'widgetUtilityService', 'config', '$state', 'speedometerService', 'modelMetadatasService', '$rootScope', 'Entity', '_'];
+  speedometer110Ctrl.$inject = ['$q','$scope', 'widgetUtilityService', 'config', '$state', 'speedometerService', 'modelMetadatasService', '$rootScope', 'Entity', '_'];
 
-  function speedometer100Ctrl($q, $scope, widgetUtilityService, config, $state, speedometerService, modelMetadatasService, $rootScope, Entity, _) {
+  function speedometer110Ctrl($q, $scope, widgetUtilityService, config, $state, speedometerService, modelMetadatasService, $rootScope, Entity, _) {
 
     $scope.config = config;
     $scope.pageState = $state;
