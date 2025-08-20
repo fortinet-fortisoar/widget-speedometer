@@ -6,11 +6,11 @@ Copyright end */
 (function () {
     angular
         .module('cybersponse')
-        .controller('editSpeedometer100Ctrl', editSpeedometer100Ctrl);
+        .controller('editSpeedometer110Ctrl', editSpeedometer110Ctrl);
 
-    editSpeedometer100Ctrl.$inject = ['$scope', '$uibModalInstance', 'config', 'widgetUtilityService', '$timeout','appModulesService', 'Entity', 'modelMetadatasService'];
+    editSpeedometer110Ctrl.$inject = ['$scope', '$uibModalInstance', 'config', 'widgetUtilityService', '$timeout','appModulesService', 'Entity', 'modelMetadatasService'];
 
-    function editSpeedometer100Ctrl($scope, $uibModalInstance, config, widgetUtilityService, $timeout, appModulesService, Entity, modelMetadatasService) {
+    function editSpeedometer110Ctrl($scope, $uibModalInstance, config, widgetUtilityService, $timeout, appModulesService, Entity, modelMetadatasService) {
       $scope.cancel = cancel;
       $scope.save = save;
       $scope.config = config;

@@ -2,8 +2,8 @@
     "name": "speedometer",
     "title": "Speedometer",
     "subTitle": "Speedometer widget displays the percentage value",
-    "version": "1.0.0",
-    "published_date": 1733218494,
+    "version": "1.1.0",
+    "published_date": 1755533048,
     "releaseNotes": "unavailable",
     "metadata": {
         "description": "Speedometer widget displays the percentage value of selected parameter.",
@@ -18,7 +18,8 @@
         "category": [
             "Threat Intelligence",
             "Vulnerability and Risk Management"
-        ]
+        ],
+        "help_online": "https://github.com/fortinet-fortisoar/solution-pack-fortiguard-labs-ioc-search/tree/release/1.1.0/README.md"
     },
     "development": false
 }
